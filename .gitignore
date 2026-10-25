@@ -1,0 +1,14 @@
+# Gradle / build output
+.gradle/
+build/
+app/build/
+local.properties
+*.iml
+.idea/
+
+# Big vendored dependency: fetch it instead (see README)
+app/material-icons-extended.jar
+
+# Signing material - never commit keys
+*.jks
+*.keystore

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+
+    <application
+        android:label="Parallel View"
+        android:theme="@style/Theme.BtLocator"
+        android:supportsRtl="true"
+        android:enableOnBackInvokedCallback="true">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="Parallel View"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data android:name="xposedmodule" android:value="true" />
+        <meta-data
+            android:name="xposeddescription"
+            android:value="真正的应用内左右分栏（平行视界）：直连系统 ActivityEmbedding 扩展，MiuiX + Material 3 Expressive 双风格界面。" />
+        <meta-data android:name="xposedminversion" android:value="93" />
+    </application>
+</manifest>
