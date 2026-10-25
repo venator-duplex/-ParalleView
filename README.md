@@ -42,8 +42,7 @@ component.setEmbeddingRules(Set<EmbeddingRule>)
 2. 在 **LSPosed 管理器**里启用本模块，并把需要分栏的应用加入**作用域**；
 3. 重启设备（LSPosed 作用域变更必须重启）；
 4. 打开目标应用，点进详情页 —— 应该左右分栏。
-
-> 作用域就是唯一的授权入口，模块里**没有**第二个白名单。
+PS:本模块无法在应用内提供两边画面比例调节，但你可以在模块内设置你想要的两边画面显示比例
 
 ## 构建
 
@@ -67,18 +66,6 @@ curl -L -o app/material-icons-extended.jar \
 
 `app/stubs.jar` 是 Xposed API 的编译期桩（运行时由 LSPosed 提供），必须保留。
 
-## 目录
-
-```
-app/src/main/java/com/example/parallelview/
-├── Hook.kt              LSPosed 入口
-├── EmbeddingExtHook.kt  直连系统扩展注册规则（核心）
-├── MainActivity.kt      Compose UI（概览 / 分栏 / 外观）
-├── AppTheme.kt          Miuix + Material 3 Expressive 双主题
-├── LiquidGlassNavBar.kt 液态玻璃底部导航（Compose + miuix-blur）
-├── AdaptiveComponents.kt / AdaptiveStyle.kt  跨设计语言的组件桥
-├── Targets.kt           分栏比例等配置（Settings.Global）
-└── liquidglass/         折射 / 增艳 / 内阴影 / 阻尼拖拽
 ```
 
 ## 许可
