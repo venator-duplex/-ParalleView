@@ -1,0 +1,23 @@
+```yaml
+name: build
+on: [push, workflow_dispatch]
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Fetch icons
+        run: |
+          curl -L -o app/material-icons-extended.jar \
+            https://maven.aliyun.com/repository/google/androidx/compose/material/material-icons-extended-android/1.7.0/material-icons-extended-android-1.7.0.aar
+      - name: Build
+        run: ./gradlew :app:assembleRelease --no-daemon
+      - uses: actions/upload-artifact@v4
+        with:
+          name: apk
+          path: app/build/outputs/apk/release/*.apk
+```
