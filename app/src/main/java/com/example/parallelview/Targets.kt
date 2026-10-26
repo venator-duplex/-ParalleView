@@ -8,22 +8,25 @@ object Targets {
     const val KEY_TARGETS = "parallelview_targets"
     const val KEY_RATIO = "parallelview_split_ratio"
 
-    private val DEFAULTS = setOf("com.bilibili.app.in", "tv.danmaku.bili", "com.coolapk.market")
-
-    fun isParallel(context: Context?, pkg: String): Boolean {
-        if (context == null) return DEFAULTS.contains(pkg)
-        val raw = try {
-            Settings.Global.getString(context.contentResolver, KEY_TARGETS)
+    /**
+     * Read the ratio from the module's own provider first (works without any
+     * permission), then fall back to Settings.Global for older installs.
+     */
+    fun ratio(context: Context): Float {
+        try {
+            val b = context.contentResolver.call(
+                android.net.Uri.parse("content://com.example.parallelview.config"),
+                "ratio", null, null
+            )
+            val v = b?.getFloat("ratio", -1f) ?: -1f
+            if (v > 0f) return v.coerceIn(0.15f, 0.85f)
         } catch (_: Throwable) {
-            null
-        } ?: return DEFAULTS.contains(pkg)
-        if (raw.isBlank()) return false
-        return raw.split(',').map { it.trim() }.contains(pkg)
-    }
-
-    fun ratio(context: Context): Float = try {
-        Settings.Global.getFloat(context.contentResolver, KEY_RATIO, 0.38f).coerceIn(0.15f, 0.85f)
-    } catch (_: Throwable) {
-        0.38f
+        }
+        return try {
+            Settings.Global.getFloat(context.contentResolver, KEY_RATIO, 0.38f)
+                .coerceIn(0.15f, 0.85f)
+        } catch (_: Throwable) {
+            0.38f
+        }
     }
 }

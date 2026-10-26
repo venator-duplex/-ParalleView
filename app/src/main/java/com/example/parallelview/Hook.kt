@@ -28,7 +28,12 @@ class Hook : IXposedHookLoadPackage {
                     override fun afterHookedMethod(param: MethodHookParam) {
                         try {
                             val app = param.args[0] as android.app.Application
-                            if (!Targets.isParallel(app, lpparam.packageName)) return
+                            /* LSPosed's scope IS the authorization: if the module
+                             * was injected at all, the user selected this app there.
+                             * The old Targets.isParallel() gate carried a hardcoded
+                             * fallback list (both B站 variants + 酷安), which made it
+                             * look like only Bilibili was supported. */
+                            if (lpparam.packageName == "com.example.parallelview") return
                             XposedBridge.log(TAG + "enabling for " + lpparam.packageName)
                             EmbeddingExtHook.install(app)
                         } catch (t: Throwable) {

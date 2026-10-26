@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
 
     <application
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:label="Parallel View"
         android:theme="@style/Theme.BtLocator"
         android:supportsRtl="true"
@@ -26,5 +28,9 @@
             android:name="xposeddescription"
             android:value="真正的应用内左右分栏（平行视界）：直连系统 ActivityEmbedding 扩展，MiuiX + Material 3 Expressive 双风格界面。" />
         <meta-data android:name="xposedminversion" android:value="93" />
+        <provider
+            android:name=".ConfigProvider"
+            android:authorities="com.example.parallelview.config"
+            android:exported="true" />
     </application>
 </manifest>

@@ -13,8 +13,8 @@ android {
         // miuix-blur 0.9.4（液态玻璃 highlight / sensor API）要求 Android 13。
         minSdk = 33
         targetSdk = 36
-        versionCode = 8
-        versionName = "3.1"
+        versionCode = 9
+        versionName = "1.1.0"
     }
 
     buildTypes {

@@ -856,16 +856,21 @@ private fun RatioScreen(
     var ratio by remember {
         mutableStateOf(
             try {
-                Settings.Global.getFloat(context.contentResolver, Targets.KEY_RATIO, 0.38f)
+                if (ConfigStore.ratio(context) > 0f) ConfigStore.ratio(context)
+                else Settings.Global.getFloat(context.contentResolver, Targets.KEY_RATIO, 0.38f)
             } catch (_: Throwable) {
                 0.38f
             }
         )
     }
     fun persist(v: Float) {
+        /* Own storage first: it never needs a permission, and the hook reads it
+         * through ConfigProvider. Settings.Global is kept as a legacy fallback. */
+        ConfigStore.setRatio(context, v)
         try {
             Settings.Global.putFloat(context.contentResolver, Targets.KEY_RATIO, v)
         } catch (_: Throwable) {
+            /* No WRITE_SECURE_SETTINGS: harmless now, the provider path works. */
         }
     }
 
